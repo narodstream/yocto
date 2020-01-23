@@ -1,0 +1,22 @@
+From 3b71bbbf019466cd4d4462f2ecacdf757d6e0acc Mon Sep 17 00:00:00 2001
+From: Vladimir <you@example.com>
+Date: Wed, 8 Jan 2020 06:43:08 +0000
+Subject: [PATCH] change port to 7777
+
+---
+ app.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/app.py b/app.py
+index d3c9203..e118daa 100644
+--- a/app.py
++++ b/app.py
+@@ -11,4 +11,4 @@ def hello_world():
+ 
+ 
+ if __name__ == '__main__':
+-    app.run(host='0.0.0.0')
++    app.run(host='0.0.0.0',port=7777)
+-- 
+2.7.4
+

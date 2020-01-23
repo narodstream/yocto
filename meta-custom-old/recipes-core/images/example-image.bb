@@ -1,23 +1,15 @@
-# Base this image on core-image-sato
-include recipes-sato/images/core-image-sato.bb
+# Base this image on core-image-base
+include recipes-core/images/core-image-base.bb
 
 # Only allow for machines which start with "rpi"
 COMPATIBLE_MACHINE = "^rpi$"
-
-#Be abble to generate qt5 sdk
-inherit populate_sdk_qt5
-
-LICENSE = "CLOSED"
-LIC_FILES_CHKSUM = ""
-
-# Add rsync (for qt creator deployment)
-IMAGE_INSTALL += "rsync"
 
 # User configuration
 inherit extrausers
 EXTRA_USERS_PARAMS = "\
 usermod -p \\\$1\\\$bYVe2.v8\\\$tivpm0e493fTMcfGxVac9. root \
 "
+
 inherit populate_sdk_qt5
 # Only produce the "rpi-sdimg" image format
 IMAGE_FSTYPES = "rpi-sdimg"
@@ -54,11 +46,11 @@ IMAGE_INSTALL += "vim"
 # Configure timezone
 IMAGE_INSTALL += "tzdata-europe tzdata"
 
+# Use Network Manager
+IMAGE_INSTALL += "networkmanager networkmanager-bash-completion networkmanager-nmtui"
+
 # Add cpp hello world app
 IMAGE_INSTALL += "cpp-hello-world"
-
-# Add gtk hello world app
-IMAGE_INSTALL += "gtk-hello-world"
 
 # Install cmake hello world 
 IMAGE_INSTALL += "cmake-hello-world"
@@ -68,9 +60,3 @@ IMAGE_INSTALL += "python-flask-hello-world"
 
 # Install qt5 cinematic experience app
 IMAGE_INSTALL += "cinematicexperience"
-
-# Install qt-simple-calc
-IMAGE_INSTALL += "qt-simple-calc"
-
-# Install qt-prog01
-IMAGE_INSTALL += "qt-prog01"

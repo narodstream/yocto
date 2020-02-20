@@ -12,4 +12,3 @@ LIC_FILES_CHKSUM = ""
 
 # Add rsync (for qt creator deployment)
 IMAGE_INSTALL += "rsync"
-IMAGE_INSTALL += "kernel-modules"

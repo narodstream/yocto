@@ -1,4 +1,4 @@
 SANITY_VERSION 1
-TMPDIR /opt/yocto/workspace/rpi-build/tmp
-SSTATE_DIR /opt/yocto/cache/sstate
-NATIVELSBSTRING ubuntu-16.04
+TMPDIR /opt/stlinux-weston/build-openstlinuxweston-stm32mp1/tmp-glibc
+SSTATE_DIR /opt/stlinux-weston/build-openstlinuxweston-stm32mp1/sstate-cache
+NATIVELSBSTRING ubuntu-18.04

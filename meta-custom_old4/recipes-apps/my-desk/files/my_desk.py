@@ -17,7 +17,7 @@ class GridWindow(Gtk.Window):
 
         # create some buttons
         button1 = Gtk.Button(label="QT Lcd Test")
-        pb = GdkPixbuf.Pixbuf.new_from_file_at_size('/usr/local/desk/img/img001.png', 100, 100)
+        pb = GdkPixbuf.Pixbuf.new_from_file_at_size('/usr/local/img/img001.png', 100, 100)
         img = Gtk.Image()
         img.set_from_pixbuf(pb)
         button1.set_image(img)

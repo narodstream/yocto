@@ -1,9 +1,6 @@
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/init.h>
-#include <linux/kdev_t.h>
-#include <linux/device.h>
-#include <linux/cdev.h>
 #include <linux/fs.h>
 #include <linux/ioctl.h>
 #include <linux/uaccess.h>
@@ -68,9 +65,6 @@ enum hd44780_pin {
 
 static int i;
 static uint32_t CUR_POS;
-static dev_t first;
-static struct cdev c_dev;
-static struct class *cl;
 
 #define BUF_LEN 80
 static char Message[BUF_LEN];
@@ -177,29 +171,8 @@ static void hd44780_init(void)
 
 static int __init mygpiomodule_init( void ) {
 	printk(KERN_INFO "+> module mygpiomodule start!\n");
-	if (alloc_chrdev_region(&first, 0, 1, "Shweta") < 0)
-	{
-		return -1;
-	}
-	if ((cl = class_create(THIS_MODULE, "mygpiodrv")) == NULL)
-	{
-	unregister_chrdev_region(first, 1);
-	return -1;
-	}
-	if (device_create(cl, NULL, first, NULL, "mygpio") == NULL)
-	{
-	class_destroy(cl);
-	unregister_chrdev_region(first, 1);
-	return -1;
-	}
-	cdev_init(&c_dev, &fops);
-	if (cdev_add(&c_dev, first, 1) == -1)
-	{
-	device_destroy(cl, first);
-	class_destroy(cl);
-	unregister_chrdev_region(first, 1);
-	return -1;
-	}
+	   register_chrdev(MAJOR_NUM, DEVICE_NAME, &fops);
+
 	printk("<1>the driver, create a dev file with\n");
 	printk("'mknod /dev/mygpio c %d 0'.\n", MAJOR_NUM);	
 
@@ -207,10 +180,8 @@ static int __init mygpiomodule_init( void ) {
 }
 
 static void __exit mygpiomodule_exit( void ) {
-	cdev_del(&c_dev);
-	device_destroy(cl, first);
-	class_destroy(cl);
-	unregister_chrdev_region(first, 1);	
+	unregister_chrdev(MAJOR_NUM, DEVICE_NAME);
+	
 	printk(KERN_INFO "+> module mygpiomodule unloaded!\n" );
 }
 
@@ -280,6 +251,7 @@ static int device_open(struct inode *inode, struct file *file)
 		gpio_direction_output(leds_gpios[i].gpio, 0);
 		gpio_set_value(leds_gpios[i].gpio, 0);
 	}
+	
 	mdelay(200);
 	printk(KERN_INFO "+> mygpio is opened!\n" );
 	return SUCCESS;

@@ -1,0 +1,41 @@
+From b004f4e90f67bd1ad8fe8f2cfdeb0f85d9ac6a39 Mon Sep 17 00:00:00 2001
+From: narodstream <vlad_vorobyev@mail.ru>
+Date: Mon, 3 Feb 2020 18:58:56 +0300
+Subject: [PATCH] update adc
+
+---
+ arch/arm/boot/dts/stm32mp157a-dk1.dts | 15 +++------------
+ 1 file changed, 3 insertions(+), 12 deletions(-)
+
+diff --git a/arch/arm/boot/dts/stm32mp157a-dk1.dts b/arch/arm/boot/dts/stm32mp157a-dk1.dts
+index e3a36d3..bb3b02a 100644
+--- a/arch/arm/boot/dts/stm32mp157a-dk1.dts
++++ b/arch/arm/boot/dts/stm32mp157a-dk1.dts
+@@ -127,21 +127,12 @@
+ 
+ &adc {
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&adc12_usb_pwr_pins_a>;
+-	vdd-supply = <&vdd>;
+-	vdda-supply = <&vdd>;
++	pinctrl-0 = <&adc1_in6_pins_a>;
+ 	vref-supply = <&vrefbuf>;
+ 	status = "okay";
+ 	adc1: adc@0 {
+-		/*
+-		 * Type-C USB_PWR_CC1 & USB_PWR_CC2 on in18 & in19.
+-		 * Use at least 5 * RC time, e.g. 5 * (Rp + Rd) * C:
+-		 * 5 * (56 + 47kOhms) * 5pF => 2.5us.
+-		 * Use arbitrary margin here (e.g. 5µs).
+-		 */
+-		st,min-sample-time-nsecs = <5000>;
+-		/* ANA0, ANA1, USB Type-C CC1 & CC2 */
+-		st,adc-channels = <0 1 18 19>;
++		st,min-sample-time-nsecs = <10000>;
++		st,adc-channels = <6>;
+ 		status = "okay";
+ 	};
+ 	adc2: adc@100 {
+-- 
+2.17.1
+
